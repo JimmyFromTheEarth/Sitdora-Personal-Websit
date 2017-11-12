@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>简介 (Introduction)</title>
+        <link rel="text/stylesheet" type="text/css" src="../styles/common.css" />
+    </head>
+    <body>
+        <ul>
+            <li>
+                <h3>ECMAScript 和 JavasScript 的关系</h3>
+                <p>
+                    <h4>不同</h4>
+                    JavaScript 是由 NetScape 公司开发用于其浏览器产品的一个<b>脚本语言</b>。
+                    并且由 JavaScript 这一商标保护。<br/>
+                    ECMAScript 是指由 ECMA 标准化组织发行的一个国际通用的脚本语言<b>标准</b>， 一句此标准实现的脚本语言都可称为 ECMAScript 。<br/>
+
+                </p>
+                <p>
+                    <h4>关系</h4>
+                    ECMAScript 这个标准最初是由 NetScape 公司将其脚本语言 JavaScript 提供给国际标准化组织作为标准制定的参考，由 ECMA 在此基础上开发出一个国际通用的标准。<br/>
+                    因此， JavaScript 是　ECMAScript 标准的一种实现。<br/>
+                    在一般情况下， JavaScript 和 ECMAScript 是可互换的。
+                </p>
+                <p>
+                    <h4>其他信息</h4>
+                    按照 ECMAScript 这一标准实现的脚本语言还有：Jscript，ActionScript ...
+                </p>
+            </li>
+            <li>
+                <h3>ES6 与 ECMAScript 2015</h3>
+                <p>
+                    ES6 表示一个版本：ECMAScript 6<br/>
+                    而ECMAScript 2015 指代版本发行的年份： ECMAScript 6.0 - 2015/6<br/>
+                </p>
+                <p>
+                    <h4>版本发布历史</h4>
+                    <ul>
+                        <li>06/1997 - ECMAScript 1.0 (Release)</li>
+                        <li>06/1998 - ECMAScript 2.0 (Release)</li>
+                        <li>12/1999 - ECMAScript 3.0 (Release)</li>
+                        <li>00/2000 - ECMAScript 4.0 (Starts to Proposal)</li>
+                        <li>00/2007 - ECMAScript 4.0 (Draft)</li>
+                        <li>00/2008 - ECMAScript 4.0 (Abandoned, splits to 3.1 and .next)</li>
+                        <li>12/2009 - ECMAScript 5.0 (Release, 原 ECMAScript 3.1)</li>
+                        <li>06/2011 - ECMAScript 5.1 (Release)</li>
+                        <li>00/2013 - ECMAScript 6.0 (Draft)</li>
+                        <li>00/2015 - ECMAScript 6.0 (Release)</li>
+                        <li>06/2016 - ECMAScript 6.1 (Release)</li>
+                        <li>06/2017 - ECMAScript 6.2 (Release)</li>
+                        <li>...</li>
+                    </ul>
+                    <sub>**</sub>00/2009 中的00表示月份未知
+                </p>
+            </li>
+            <li>
+                <h3>转换 ES6 风格的代码 到 ES5 </h3>
+                <p>
+                    <h4>Babel</h4>
+                    <ul>
+                        <li>配置 .babelrc 文件， 放于项目根目录下。<br/>
+                        <pre>
+                            {
+                                "presets":[],
+                                "plugins":[]
+                            }
+                        </pre>
+                        presets 可取的值来自于安装的 Babel 转码规则, 一下列举规则的安装命令， 取所需。
+                        <pre>
+                            $ npm install --save-dev babel-preset-latest
+                            $ npm install --save-dev babel-preset-react
+                            $ npm install --save-dev babel-preset-stage-0
+                            $ npm install --save-dev babel-preset-stage-1
+                            $ npm install --save-dev babel-preset-stage-2
+                            $ npm install --save-dev babel-preset-stage-3
+                        </pre>
+                        Babel 转码工具 babel-cli, 可安装在全局或者项目下， 一般选择后者。 方便每个项目使用不同的 .babelrc 文件。<br/>
+                        <pre>
+                            $ npm install --global babel-cli ## for global
+                            $ npm install --save-dev babel-cli ## for project
+                        </pre>
+                        执行 babel-cli
+                        <pre>
+                            ## global model
+                            $ babel example.js ## the complie result go to standard output stream
+                            $ babel example.js --out-file/-o complied.js ## use --out-fiel / -o offer a file for output 
+                            $ babel src-lib --out-dir/-d lib ## use --out-dir/-d offer a directory for output
+                            $ babel src -d lib -s ## complied entier libarray with map file
+                            ## project model
+                            ## first to update the package.json file
+                            ## to 
+                            {
+                                //..
+                                "devDependencies":{
+                                    "babel-cli":"^6.0.0"
+                                },
+                                "scripts":{
+                                    "build":"babel src -d lib"
+                                },
+                            }
+                            ## the use the command below in the project directory
+                            $ npm run build
+                        </pre>
+                        </li>
+                        <li>
+                            <h4>babel-node</h4>
+                            babel-node 是 babel-cli 自带的命令， 可用于替代 node 命令， 先转码到 ES5 再进行 node 运行。
+                        </li>
+                        <li>
+                            <h4>babel-register</h4>
+                            这一命令用于改写 require(), 在加载.js/.jsx/.es和.es6的文件时首先转码再进行 requier。
+                        </li>
+                        <li>
+                            <h4>babel-core</h4>
+                            用于在代码中进行转码。
+                            <pre>
+                                ## the code can call APIs to complie
+                                $ npm install babel-core --save
+
+                                ## example to use
+                                var babel = require("babel-core");
+                                babel.transform('code here', options);
+                                babel.transformFile('file.js', options, function(err, result){});
+                                babel.transformFileSync('file.js', options);
+                                babel.transformFromAst(ast, code, options);
+                            </pre>
+                            options 的配置参考<a href="http://babeljs.io/docs/usage/options/">官方文档</a>
+                        </li>
+                        <li>
+                            <h4>babel-polyfill</h4>
+                            用于转换新的 API, Babel 默认只会转换新语法。 具体请参考<a href="https://github.com/babel/babel/blob/master/packages/babel-plugin-transform-runtime/src/definitions.js">官方文档</a>
+                            
+                        </li>
+                        <li></li>
+                    </ul>
+                </p>
+                <p></p>
+                <p></p>
+            </li>
+            <li>
+                <h3>Node Js - 支持 ES6 </h3>
+            </li>
+        </ul>
+    </body>
+    <script type="text/javascript" src="./scripts/common.js"></script>
+</html>
